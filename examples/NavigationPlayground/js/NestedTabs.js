@@ -106,19 +106,19 @@ MySettingsScreen.navigationOptions = {
 };
 
 const SimpleNestedTabs = TabNavigator({
-  Home: {
+  NestedHome: {
     screen: MyHomeScreen,
     path: '',
   },
-  People: {
+  NestedPeople: {
     screen: MyPeopleScreen,
     path: 'cart',
   },
-  Chat: {
+  NestedChat: {
     screen: MyChatScreen,
     path: 'chat',
   },
-  Settings: {
+  NestedSettings: {
     screen: MySettingsScreen,
     path: 'settings',
   },
