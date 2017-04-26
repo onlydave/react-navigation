@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  View,
 } from 'react-native';
 import {
   TabNavigator,
@@ -30,6 +31,7 @@ const MyNavScreen = ({ navigation, banner }) => (
       onPress={() => navigation.goBack(null)}
       title="Go back"
     />
+    <View style={styles.tallThing} />
   </ScrollView>
 );
 
@@ -146,6 +148,9 @@ const SimpleTabs = TabNavigator({
     path: 'settings',
   },
 }, {
+  animationEnabled: false,
+  swipeEnabled: false,
+  tabBarPosition: 'bottom',
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? '#e91e63' : '#fff',
   },
@@ -154,7 +159,12 @@ const SimpleTabs = TabNavigator({
 const styles = StyleSheet.create({
   container: {
     marginTop: Platform.OS === 'ios' ? 20 : 0,
+    // Uncomment this to see your bottom tabs again
+    // flex: 1,
   },
+  tallThing: {
+    height: 1000,
+  }
 });
 
 export default SimpleTabs;
