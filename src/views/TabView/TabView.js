@@ -1,13 +1,8 @@
 /* @flow */
 
 import React, { PureComponent } from 'react';
-import { Platform, StyleSheet } from 'react-native';
-import {
-  TabViewAnimated,
-  TabViewPagerAndroid,
-  TabViewPagerScroll,
-  TabViewPagerPan,
-} from 'react-native-tab-view';
+import { StyleSheet } from 'react-native';
+import { TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 import SceneView from '../SceneView';
 import withCachedChildNavigation from '../../withCachedChildNavigation';
 
@@ -26,7 +21,7 @@ export type TabViewConfig = {
   tabBarOptions?: {},
   swipeEnabled?: boolean,
   animationEnabled?: boolean,
-  lazyLoad?: boolean,
+  lazy?: boolean,
 };
 
 export type TabScene = {
@@ -42,7 +37,7 @@ type Props = {
   tabBarOptions?: {},
   swipeEnabled?: boolean,
   animationEnabled?: boolean,
-  lazyLoad?: boolean,
+  lazy?: boolean,
 
   screenProps?: {},
   navigation: NavigationScreenProp<NavigationState, NavigationAction>,
@@ -51,19 +46,6 @@ type Props = {
     [key: string]: NavigationScreenProp<NavigationRoute, NavigationAction>,
   },
 };
-
-let TabViewPager;
-
-switch (Platform.OS) {
-  case 'android':
-    TabViewPager = TabViewPagerAndroid;
-    break;
-  case 'ios':
-    TabViewPager = TabViewPagerScroll;
-    break;
-  default:
-    TabViewPager = TabViewPagerPan;
-}
 
 class TabView extends PureComponent<void, Props, void> {
   props: Props;
@@ -145,22 +127,7 @@ class TabView extends PureComponent<void, Props, void> {
     );
   };
 
-  _renderPager = (props: *) => {
-    const {
-      swipeEnabled,
-      animationEnabled,
-    } = this.props;
-
-    return (
-      <TabViewPager
-        {...props}
-        swipeEnabled={swipeEnabled}
-        animationEnabled={animationEnabled}
-      />
-    );
-  };
-
-  _configureTransition = () => null;
+  _renderPager = (props: *) => <TabViewPagerPan {...props} />;
 
   render() {
     const {
@@ -168,12 +135,14 @@ class TabView extends PureComponent<void, Props, void> {
       tabBarComponent,
       tabBarPosition,
       animationEnabled,
-      lazyLoad,
+      swipeEnabled,
+      lazy,
       screenProps,
     } = this.props;
 
     let renderHeader;
     let renderFooter;
+    let renderPager;
 
     const { state } = this.props.navigation;
     const options = router.getScreenOptions(
@@ -193,26 +162,24 @@ class TabView extends PureComponent<void, Props, void> {
       }
     }
 
-    let configureTransition;
-
-    if (animationEnabled === false) {
-      configureTransition = this._configureTransition;
+    if (animationEnabled === false && swipeEnabled === false) {
+      renderPager = this._renderPager;
     }
 
     const props = {
-      style: styles.container,
-      navigationState: this.props.navigation.state,
-      lazy: lazyLoad,
+      lazy,
+      animationEnabled,
+      swipeEnabled,
+      renderPager,
       renderHeader,
       renderFooter,
       renderScene: this._renderScene,
-      renderPager: this._renderPager,
-      configureTransition,
       onRequestChangeTab: this._handlePageChanged,
+      navigationState: this.props.navigation.state,
       screenProps: this.props.screenProps,
+      style: styles.container,
     };
 
-    /* $FlowFixMe */
     return <TabViewAnimated {...props} />;
   }
 }
