@@ -24,8 +24,16 @@ const MyNavScreen = ({ navigation, banner }) => (
       title="Go to home tab"
     />
     <Button
+      onPress={() => navigation.navigate('NestedHome')}
+      title="Go to nested home tab"
+    />
+    <Button
       onPress={() => navigation.navigate('Settings')}
       title="Go to settings tab"
+    />
+    <Button
+      onPress={() => navigation.navigate('NestedSettings')}
+      title="Go to nested settings tab"
     />
     <Button
       onPress={() => navigation.goBack(null)}
@@ -125,9 +133,7 @@ const SimpleNestedTabs = TabNavigator({
     path: 'settings',
   },
 }, {
-  tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? '#e91e63' : '#fff',
-  },
+  ...TabNavigator.Presets.AndroidTopTabs,
 });
 
 const SimpleTabs = TabNavigator({
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: Platform.OS === 'ios' ? 20 : 0,
     // Uncomment this to see your bottom tabs again
-    // flex: 1,
+    flex: 1,
   },
   tallThing: {
     height: 1000,
