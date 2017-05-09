@@ -160,10 +160,7 @@ class TabView extends PureComponent<void, Props, void> {
       }
     }
 
-    if (
-      Platform.OS === 'android' ||
-      (animationEnabled === false && swipeEnabled === false)
-    ) {
+    if (animationEnabled === false && swipeEnabled === false) {
       renderPager = this._renderPager;
     }
 
