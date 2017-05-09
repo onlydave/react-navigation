@@ -21,6 +21,7 @@ import StacksInTabs from './StacksInTabs';
 import StacksOverTabs from './StacksOverTabs';
 import SimpleStack from './SimpleStack';
 import SimpleTabs from './SimpleTabs';
+import NestedTabs from './NestedTabs';
 
 const ExampleRoutes = {
   SimpleStack: {
@@ -32,6 +33,11 @@ const ExampleRoutes = {
     name: 'Tabs Example',
     description: 'Tabs following platform conventions',
     screen: SimpleTabs,
+  },
+  NestedTabs: {
+    name: 'Nested Tabs Example',
+    description: 'Tabs following platform conventions',
+    screen: NestedTabs,
   },
   Drawer: {
     name: 'Drawer Example',

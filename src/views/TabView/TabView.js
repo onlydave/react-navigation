@@ -125,8 +125,6 @@ class TabView extends PureComponent<void, Props, void> {
     );
   };
 
-  _renderPager = (props: *) => <TabViewPagerPan {...props} />;
-
   render() {
     const {
       router,
@@ -140,7 +138,7 @@ class TabView extends PureComponent<void, Props, void> {
 
     let renderHeader;
     let renderFooter;
-    let renderPager;
+    const renderPager = (props: *) => <TabViewPagerPan {...props} />;
 
     const { state } = this.props.navigation;
     const options = router.getScreenOptions(
@@ -158,10 +156,6 @@ class TabView extends PureComponent<void, Props, void> {
       } else {
         renderHeader = this._renderTabBar;
       }
-    }
-
-    if (animationEnabled === false && swipeEnabled === false) {
-      renderPager = this._renderPager;
     }
 
     const props = {
